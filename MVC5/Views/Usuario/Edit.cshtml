@@ -1,0 +1,62 @@
+﻿@model MVC5.Models.Usuario
+
+@{
+    ViewBag.Title = "Editar registro";
+}
+
+<h2></h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Editar usuario
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label>N° Registro:</label>
+                                @Html.TextBoxFor(m => m.Id, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Id)
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre:</label>
+                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Nombre)
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nombre usuario:</label>
+                                @Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Nombre_Usuario)
+                            </div>
+
+                            <div class="form-group">
+                                <label>Contraseña:</label>
+                                @Html.PasswordFor(m => m.Contrasenna, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Contrasenna)
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <input type="submit" value="Guardar cambios" class="btn btn-info" />
+                            @Html.ActionLink("Regresar", "Index",null, new {@class="btn btn-default" })
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        }
+
+                        @section Scripts {
+                            @Scripts.Render("~/bundles/jqueryval")
+                        }

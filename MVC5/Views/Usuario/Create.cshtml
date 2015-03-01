@@ -1,0 +1,53 @@
+﻿@model MVC5.Models.Usuario
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2></h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Registrar usuario</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label>Nombre:</label>
+@Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+@Html.ValidationMessageFor(m => m.Nombre)
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre de usuario:</label>
+@Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control" })
+@Html.ValidationMessageFor(m => m.Nombre_Usuario)
+                            </div>
+                            <div class="form-group">
+                                <label>Contraseña:</label>
+                                @Html.PasswordFor(model => model.Contrasenna, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Contrasenna)
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <center>
+                                <input type="submit" value="Registrar" class="btn btn-default" />
+                                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-default" })
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+                    }
+                    @section Scripts {
+                        @Scripts.Render("~/bundles/jqueryval")
+                    }
