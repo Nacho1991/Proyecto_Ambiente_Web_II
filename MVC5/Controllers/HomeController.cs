@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MVC5.Controllers
+namespace appProyectoFinal.Controllers
 {
     public class HomeController : Controller
     {
@@ -26,6 +26,5 @@ namespace MVC5.Controllers
 
             return View();
         }
-
     }
 }

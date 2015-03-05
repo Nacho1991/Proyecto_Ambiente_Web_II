@@ -5,18 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MVC5
+namespace appProyectoFinal
 {
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            //routes.MapRoute(
-            //    name: "Login",
-            //    url: "",
-            //    defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
-            //);
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
