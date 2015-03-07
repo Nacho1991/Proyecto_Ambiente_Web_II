@@ -39,7 +39,8 @@
             </div>
         </div>
     </div>
-
+@using (Html.BeginForm())
+{
     <h3>¿Desea eliminar éste usuario?</h3>
     <hr />
     @Html.AntiForgeryToken()
@@ -105,5 +106,6 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+}
 </body>
 </html>

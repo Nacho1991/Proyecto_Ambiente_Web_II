@@ -24,7 +24,17 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                     <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    @if (Request.Cookies["userName"] != null)
+                    {
+                        <li>@Html.ActionLink("Pacientes", "Index", "Pacientes")</li>
+                        <li>@Html.ActionLink("Expedientes", "Index", "Expedientes")</li>
+                        <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                        <li>@Html.ActionLink("Citas", "Index", "Citas")</li>
+                    }
+                    else if (Request.Cookies["userPaciente"] != null)
+                    {
+                        <li>@Html.ActionLink("Citas", "Create", "Citas")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

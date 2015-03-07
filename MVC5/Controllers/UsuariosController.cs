@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using System.Threading.Tasks;
 using appProyectoFinal.Contexto;
 using System.Net;
 using appProyectoFinal.Models;
@@ -65,7 +64,7 @@ namespace appProyectoFinal.Controllers
                 aCookie.Expires = DateTime.Now.AddDays(1);
                 Response.Cookies.Add(aCookie);
 
-                //ViewData["Usuario"] = usuario.Nombre_Usuario;
+                ViewData["Usuario"] = usuario.Nombre_Usuario;
                 return RedirectToAction("Index");
             }
             else

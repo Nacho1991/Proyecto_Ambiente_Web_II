@@ -71,3 +71,4 @@ E:\slnAppProyectoFinal\appProyectoFinal\bin\es\Microsoft.Owin.Security.Twitter.r
 E:\slnAppProyectoFinal\appProyectoFinal\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.dll
 E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.pdb
+E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.csprojResolveAssemblyReference.cache

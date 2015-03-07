@@ -1,0 +1,38 @@
+﻿@using appProyectoFinal.Models
+@model Paciente
+@{
+    ViewBag.Title = "Iniciar sesión";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Sesion", "Pacientes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label>Cédula:</label>
+                        @Html.TextBoxFor(m => m.Cedula, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Cedula, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                   <label>Contraseña:</label>
+                        @Html.PasswordFor(m => m.Contrasenna, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Contrasenna, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Iniciar sesión" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

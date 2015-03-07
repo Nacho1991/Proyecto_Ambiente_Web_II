@@ -63,7 +63,7 @@ namespace appProyectoFinal.Controllers
         // GET: Citas/Create
         public ActionResult Create()
         {
-            if (session())
+            if (session() || Request.Cookies["userPaciente"] != null)
             {
                 return View();
             }
@@ -78,15 +78,21 @@ namespace appProyectoFinal.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha,Estado")] Cita cita)
+        public ActionResult Create([Bind(Include = "Id,fecha,Estado,Cedula_Id")] Cita cita)
         {
             if (ModelState.IsValid)
             {
                 db.Citas.Add(cita);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Request.Cookies["userPaciente"] != null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-
             return View(cita);
         }
 

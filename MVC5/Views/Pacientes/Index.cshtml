@@ -28,71 +28,113 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                     <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-
+@if (Request.Cookies["userName"] != null)
+                    {
                     <li>@Html.ActionLink("Pacientes", "Index", "Pacientes")</li>
                     <li>@Html.ActionLink("Expedientes", "Index", "Expedientes")</li>
                     <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
                     <li>@Html.ActionLink("Citas", "Index", "Citas")</li>
+}
                 </ul>
                 @Html.Partial("_LoginPartial")
 
             </div>
         </div>
     </div>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellidos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contrasenna)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.tipoUsuario)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contrasenna)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tipoUsuario)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-    
-    </table>
+    <div class="col-lg-12">
+        <h1 class="page-header">Pacientes</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-9">
+            <p>
+                <button class="btn btn-info">@Html.ActionLink("Registrar", "Create", new { @class = "btn btn-default" })</button>
+            </p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Lista de pacientes
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        N° Registro
+                                    </th>
+                                    <th>
+                                        Cédula
+                                    </th>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Apellidos
+                                    </th>
+                                    <th>
+                                        Dirección
+                                    </th>
+                                    <th>
+                                        Contraseña
+                                    </th>
+                                    <th>
+                                        Tipo de usuario
+                                    </th>
+                                    <th>
+                                        Opciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model) {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Id)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cedula)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nombre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Apellidos)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Direccion)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Contrasenna)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.tipoUsuario)
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-default"> @Html.ActionLink("Editar", "Edit", new { id = item.Id })</button>
+                                                <button class="btn btn-default"> @Html.ActionLink("Ver detalles", "Details", new { id = item.Id }) </button>
+                                                <button class="btn btn-default"> @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })</button>
+                                            </td>
+                                        </tr>
+                                }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>No hay registros</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
 </body>
 </html>

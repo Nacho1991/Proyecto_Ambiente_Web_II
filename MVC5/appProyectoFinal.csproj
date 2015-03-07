@@ -288,6 +288,7 @@
     <Content Include="Views\Expedientes\Details.cshtml" />
     <Content Include="Views\Expedientes\Edit.cshtml" />
     <Content Include="Views\Expedientes\Index.cshtml" />
+    <Content Include="Views\Pacientes\Sesion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,12 +24,65 @@ namespace appProyectoFinal.Controllers
             }
             else 
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Sesion");
             }
+        }
+        [AllowAnonymous]
+        public ActionResult Sesion(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Sesion([Bind(Include = "Cedula,Contrasenna")] Paciente oPasiente)
+        {
+            if (IsValido(oPasiente.Cedula, oPasiente.Contrasenna))
+            {
+                Response.Cookies["userPaciente"].Value = oPasiente.Cedula;
+                Response.Cookies["userPaciente"].Expires = DateTime.Now.AddDays(1);
+                HttpCookie aCookie = new HttpCookie("lastVisit");
+                aCookie.Value = DateTime.Now.ToString();
+                aCookie.Expires = DateTime.Now.AddDays(1);
+                Response.Cookies.Add(aCookie);
+
+                ViewData["Paciente"] = oPasiente.Cedula;
+                return RedirectToAction("Index","Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Paciente Incorrecto");
+            }
+
+            return RedirectToAction("Sesion");
+        }
+        private bool IsValido(string cedula, string password)
+        {
+            bool isValid = false;
+            var login = db.Pacientes.FirstOrDefault(usuario => usuario.Cedula == cedula);
+            if (login != null)
+            {
+                //var encrpPass = Crypto.Hash(password);
+                if (login.Contrasenna == password)
+                {
+                    isValid = true;
+                }
+            }
+            return isValid;
+        }
+        public ActionResult SesionOut()
+        {
+            if (Request.Cookies["userPaciente"] != null)
+            {
+                var c = new HttpCookie("userPaciente");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+            }
+            return RedirectToAction("Sesion","Pacientes");
         }
         public Boolean session()
         {
-            if (Request.Cookies["userName"] != null)
+            if (Request.Cookies["userName"] != null || Request.Cookies["userPaciente"] != null)
             {
                 return true;
             }
