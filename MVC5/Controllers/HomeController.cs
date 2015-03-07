@@ -10,6 +10,10 @@ namespace appProyectoFinal.Controllers
     {
         public ActionResult Index()
         {
+            if (Request.Cookies["userName"] != null)
+            {
+                return RedirectToAction("Index","Usuarios");
+            }
             return View();
         }
 

@@ -18,28 +18,59 @@ namespace appProyectoFinal.Controllers
         // GET: Citas
         public ActionResult Index()
         {
-            return View(db.Citas.ToList());
+            if (session())
+            {
+                return View(db.Citas.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
-
+        public Boolean session()
+        {
+            if (Request.Cookies["userName"] != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         // GET: Citas/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Cita cita = db.Citas.Find(id);
+                if (cita == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cita);
             }
-            Cita cita = db.Citas.Find(id);
-            if (cita == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(cita);
         }
 
         // GET: Citas/Create
         public ActionResult Create()
         {
-            return View();
+            if (session())
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         // POST: Citas/Create
@@ -62,16 +93,23 @@ namespace appProyectoFinal.Controllers
         // GET: Citas/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Cita cita = db.Citas.Find(id);
+                if (cita == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cita);
             }
-            Cita cita = db.Citas.Find(id);
-            if (cita == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(cita);
         }
 
         // POST: Citas/Edit/5
@@ -81,28 +119,41 @@ namespace appProyectoFinal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,fecha,Estado")] Cita cita)
         {
-            if (ModelState.IsValid)
+            if (session())
             {
-                db.Entry(cita).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(cita).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(cita);
             }
-            return View(cita);
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         // GET: Citas/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Cita cita = db.Citas.Find(id);
+                if (cita == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cita);
             }
-            Cita cita = db.Citas.Find(id);
-            if (cita == null)
-            {
-                return HttpNotFound();
+            else {
+                return RedirectToAction("Login");
             }
-            return View(cita);
         }
 
         // POST: Citas/Delete/5

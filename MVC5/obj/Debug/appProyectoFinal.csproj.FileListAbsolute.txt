@@ -69,6 +69,5 @@ E:\slnAppProyectoFinal\appProyectoFinal\bin\es\Microsoft.Owin.Security.Facebook.
 E:\slnAppProyectoFinal\appProyectoFinal\bin\es\Microsoft.Owin.Security.Google.resources.dll
 E:\slnAppProyectoFinal\appProyectoFinal\bin\es\Microsoft.Owin.Security.Twitter.resources.dll
 E:\slnAppProyectoFinal\appProyectoFinal\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.csprojResolveAssemblyReference.cache
 E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.dll
 E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.pdb

@@ -18,28 +18,59 @@ namespace appProyectoFinal.Controllers
         // GET: Expedientes
         public ActionResult Index()
         {
-            return View(db.Expedientes.ToList());
+            if (session())
+            {
+                return View(db.Expedientes.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
-
+        public Boolean session()
+        {
+            if (Request.Cookies["userName"] != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         // GET: Expedientes/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Expediente expediente = db.Expedientes.Find(id);
+                if (expediente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(expediente);
             }
-            Expediente expediente = db.Expedientes.Find(id);
-            if (expediente == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Ligin");
             }
-            return View(expediente);
         }
 
         // GET: Expedientes/Create
         public ActionResult Create()
         {
-            return View();
+            if (session())
+            {
+                return View();
+            }
+            else 
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         // POST: Expedientes/Create
@@ -62,16 +93,23 @@ namespace appProyectoFinal.Controllers
         // GET: Expedientes/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Expediente expediente = db.Expedientes.Find(id);
+                if (expediente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(expediente);
             }
-            Expediente expediente = db.Expedientes.Find(id);
-            if (expediente == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(expediente);
         }
 
         // POST: Expedientes/Edit/5
@@ -93,16 +131,23 @@ namespace appProyectoFinal.Controllers
         // GET: Expedientes/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Expediente expediente = db.Expedientes.Find(id);
+                if (expediente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(expediente);
             }
-            Expediente expediente = db.Expedientes.Find(id);
-            if (expediente == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(expediente);
         }
 
         // POST: Expedientes/Delete/5

@@ -12,47 +12,37 @@ using appProyectoFinal.Contexto;
 using System.Net;
 using appProyectoFinal.Models;
 using System.Data.Entity;
+using System.Web.Helpers;
+using System.Web.Security;
 
 namespace appProyectoFinal.Controllers
 {
     public class UsuariosController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
 
-        public UsuariosController() { }
-        public UsuariosController(ApplicationUserManager userManager, ApplicationSignInManager signInManager) 
+        public Boolean session()
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-        public ApplicationSignInManager SignInManager
-        {
-            get
+            if (Request.Cookies["userName"] != null)
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return true;
             }
-            private set
+            else
             {
-                _signInManager = value;
-            }
-        }
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
+                return false;
             }
         }
         // GET: Usuarios
         public ActionResult Index()
         {
-            return View(db.Usuarios.ToList());
+            if (session())
+            {
+                return View(db.Usuarios.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         [AllowAnonymous]
@@ -63,52 +53,84 @@ namespace appProyectoFinal.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(Usuario model, string returnUrl)
+        public ActionResult Login([Bind(Include = "Nombre_usuario,Contrasenna")] Usuario usuario)
         {
-            if (!ModelState.IsValid)
+            if (IsValid(usuario.Nombre_Usuario, usuario.Contrasenna))
             {
-                return View(model);
+                Response.Cookies["userName"].Value = usuario.Nombre_Usuario;
+                Response.Cookies["userName"].Expires = DateTime.Now.AddDays(1);
+                HttpCookie aCookie = new HttpCookie("lastVisit");
+                aCookie.Value = DateTime.Now.ToString();
+                aCookie.Expires = DateTime.Now.AddDays(1);
+                Response.Cookies.Add(aCookie);
+
+                //ViewData["Usuario"] = usuario.Nombre_Usuario;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Usuario Incorrecto");
             }
 
-            // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
-            // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Nombre_Usuario, model.Contrasenna, false, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
-                    return View(model);
-            }
+            return RedirectToAction("Index");
         }
-
+        public ActionResult Logout() {
+            //Cerramos Session
+            if (Request.Cookies["userName"] != null)
+            {
+                var c = new HttpCookie("userName");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+            }
+            return RedirectToAction("Login");
+        }
+        private bool IsValid(string user, string password)
+        {
+            bool isValid = false;
+            var login = db.Usuarios.FirstOrDefault(usuario => usuario.Nombre_Usuario == user);
+            if (login != null)
+            {
+                //var encrpPass = Crypto.Hash(password);
+                if (login.Contrasenna == password)
+                {
+                    isValid = true;
+                }
+            }
+            return isValid;
+        }
         // GET: Usuarios/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Usuario usuario = db.Usuarios.Find(id);
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(usuario);
         }
 
         // GET: Usuarios/Create
         public ActionResult Create()
         {
-            return View();
+            if (session())
+            {
+                return View();
+            }
+            else {
+                return RedirectToAction("Login");
+            }
         }
 
         // POST: Usuarios/Create
@@ -116,46 +138,39 @@ namespace appProyectoFinal.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Usuario model)
+        public ActionResult Create([Bind(Include = "Id,Nombre,Nombre_Usuario,Contrasenna")] Usuario pUsuario)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Nombre_Usuario,  Email = model.Nombre };
-                var result = await UserManager.CreateAsync(user, model.Contrasenna);
-                if (result.Succeeded)
-                {
-                    await  SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // Para obtener más información sobre cómo habilitar la confirmación de cuenta y el restablecimiento de contraseña, visite http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Enviar correo electrónico con este vínculo
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
-
-                    return RedirectToAction("Index", "Usuarios");
-                }
-                AddErrors(result);
+                db.Usuarios.Add(pUsuario);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
-            // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
-            return View(model);
+            return View(pUsuario);
         }
 
         // GET: Usuarios/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Usuario usuario = db.Usuarios.Find(id);
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(usuario);
         }
 
         // POST: Usuarios/Edit/5
@@ -177,16 +192,23 @@ namespace appProyectoFinal.Controllers
         // GET: Usuarios/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Usuario usuario = db.Usuarios.Find(id);
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-            Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            else 
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(usuario);
         }
 
         // POST: Usuarios/Delete/5

@@ -18,28 +18,60 @@ namespace appProyectoFinal.Controllers
         // GET: Pacientes
         public ActionResult Index()
         {
-            return View(db.Pacientes.ToList());
+            if (session())
+            {
+                return View(db.Pacientes.ToList());
+            }
+            else 
+            {
+                return RedirectToAction("Login");
+            }
+        }
+        public Boolean session()
+        {
+            if (Request.Cookies["userName"] != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         // GET: Pacientes/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Paciente paciente = db.Pacientes.Find(id);
+                if (paciente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(paciente);
             }
-            Paciente paciente = db.Pacientes.Find(id);
-            if (paciente == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login");
             }
-            return View(paciente);
         }
 
         // GET: Pacientes/Create
         public ActionResult Create()
         {
-            return View();
+            if (session())
+            {
+                return View();
+            }
+            else 
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         // POST: Pacientes/Create
@@ -62,16 +94,22 @@ namespace appProyectoFinal.Controllers
         // GET: Pacientes/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Paciente paciente = db.Pacientes.Find(id);
+                if (paciente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(paciente);
             }
-            Paciente paciente = db.Pacientes.Find(id);
-            if (paciente == null)
-            {
-                return HttpNotFound();
+            else {
+                return RedirectToAction("Login");
             }
-            return View(paciente);
         }
 
         // POST: Pacientes/Edit/5
@@ -93,16 +131,22 @@ namespace appProyectoFinal.Controllers
         // GET: Pacientes/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (session())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Paciente paciente = db.Pacientes.Find(id);
+                if (paciente == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(paciente);
             }
-            Paciente paciente = db.Pacientes.Find(id);
-            if (paciente == null)
-            {
-                return HttpNotFound();
+            else {
+                return RedirectToAction("Login");
             }
-            return View(paciente);
         }
 
         // POST: Pacientes/Delete/5

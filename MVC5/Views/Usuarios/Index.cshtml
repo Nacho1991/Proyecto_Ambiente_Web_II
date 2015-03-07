@@ -3,7 +3,6 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,15 +23,18 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Universidad Técnica Nacional", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+           </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                     <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                    @if (Request.Cookies["userName"] != null)
+                    {
                     <li>@Html.ActionLink("Pacientes", "Index", "Pacientes")</li>
                     <li>@Html.ActionLink("Expedientes", "Index", "Expedientes")</li>
                     <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
                     <li>@Html.ActionLink("Citas", "Index", "Citas")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -74,7 +76,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model)
+                                @if (Model != null) { 
+                                foreach (var item in Model)
                                 {
                                     <tr>
                                         <td>
@@ -91,6 +94,12 @@
                                             </center>
                                         </td>
                                     </tr>
+                                }
+                                }
+                                else { 
+                                <tr>
+                                    <td>No hay registros</td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
