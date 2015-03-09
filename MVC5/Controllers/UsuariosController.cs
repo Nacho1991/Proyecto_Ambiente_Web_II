@@ -153,6 +153,7 @@ namespace appProyectoFinal.Controllers
             {
                 db.Usuarios.Add(pUsuario);
                 db.SaveChanges();
+                TempData["Insertado"] = "Usuario registrado";
                 return RedirectToAction("Index");
             }
 

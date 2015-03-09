@@ -24,17 +24,17 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Universidad Técnica Nacional", "Dashboard", "Usuarios", new { area = "" }, new { @class = "navbar-brand" })
-           </div>
+            </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Inicio", "Dashboard", "Usuarios")</li>
                     <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
                     @if (Request.Cookies["userName"] != null)
                     {
-                    <li>@Html.ActionLink("Pacientes", "Index", "Pacientes")</li>
-                    <li>@Html.ActionLink("Expedientes", "Index", "Expedientes")</li>
-                    <li class="active">@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
-                    <li>@Html.ActionLink("Citas", "Index", "Citas")</li>
+                        <li>@Html.ActionLink("Pacientes", "Index", "Pacientes")</li>
+                        <li>@Html.ActionLink("Expedientes", "Index", "Expedientes")</li>
+                        <li class="active">@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                        <li>@Html.ActionLink("Citas", "Index", "Citas")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

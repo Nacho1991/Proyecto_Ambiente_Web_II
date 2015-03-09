@@ -72,3 +72,6 @@ E:\slnAppProyectoFinal\appProyectoFinal\bin\es\Microsoft.Owin.Security.Microsoft
 E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.dll
 E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.pdb
 E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.csprojResolveAssemblyReference.cache
+E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.Migrations.InitialCreate.resources
+E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.csproj.GenerateResource.Cache
+E:\slnAppProyectoFinal\appProyectoFinal\obj\Debug\appProyectoFinal.Migrations.ApplicationContext.resources
