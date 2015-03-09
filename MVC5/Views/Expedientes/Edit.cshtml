@@ -8,74 +8,112 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    
-    
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>Expediente</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.FechaCreacion, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.FechaCreacion, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FechaCreacion, "", new { @class = "text-danger" })
-                </div>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Universidad Técnica Nacional", "Dashboard", "Usuarios", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Hemoglobina, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Hemoglobina, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Hemoglobina, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.AcidoUnico, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.AcidoUnico, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.AcidoUnico, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Creatina, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Creatina, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Creatina, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.ColesterolTotal, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ColesterolTotal, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ColesterolTotal, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inicio", "Dashboard", "Usuarios")</li>
+                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                    @if (Request.Cookies["userName"] != null)
+                    {
+                        <li>@Html.ActionLink("Pacientes", "Index", "Pacientes")</li>
+                        <li>@Html.ActionLink("Expedientes", "Index", "Expedientes")</li>
+                        <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                        <li>@Html.ActionLink("Citas", "Index", "Citas")</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
     </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <br />
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <center>
+                            Editar expediente
+                        </center>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        <label>N° Registro:</label>
+                                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nombre del cliente:</label>
+                                        @Html.EditorFor(model => model.Cliente.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Cliente.Nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Hemoglobina:</label>
+                                        @Html.EditorFor(model => model.Hemoglobina, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Hemoglobina, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ácido único:</label>
+                                        @Html.EditorFor(model => model.AcidoUnico, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.AcidoUnico, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Creatina:</label>
+                                        @Html.EditorFor(model => model.Creatina, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Creatina, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Colesterol:</label>
+                                        @Html.EditorFor(model => model.ColesterolTotal, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ColesterolTotal, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de creacióm:</label>
+                                        @Html.EditorFor(model => model.FechaCreacion, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.FechaCreacion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer panel-info">
+                        <center>
+                            <input type="submit" value="Editar" class="btn btn-default" />
+                            <button class="btn btn-default"> @Html.ActionLink("Regresar", "Index")</button>
+                        </center>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    }
 </body>
 </html>

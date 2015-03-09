@@ -24,16 +24,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Universidad Técnica Nacional", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Universidad Técnica Nacional", "Dashboard", "Usuarios", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Inicio", "Dashboard", "Usuarios")</li>
                     <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+@if (Request.Cookies["userName"] != null)
+                    {
                     <li>@Html.ActionLink("Pacientes", "Index", "Pacientes")</li>
                     <li>@Html.ActionLink("Expedientes", "Index", "Expedientes")</li>
                     <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
                     <li>@Html.ActionLink("Citas", "Index", "Citas")</li>
+}
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -41,7 +44,7 @@
     </div>
 @using (Html.BeginForm())
 {
-    <h3>¿Desea eliminar éste usuario?</h3>
+    <h3>¿Desea eliminar éste expediente?</h3>
     <hr />
     @Html.AntiForgeryToken()
     <div class="row">

@@ -180,6 +180,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminLTE.css" />
+    <Content Include="Content\AdminLTE.min.css" />
     <Content Include="Content\bootstrap-rtl.css" />
     <Content Include="Content\bootstrap-rtl.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -189,10 +191,26 @@
     <Content Include="Content\morris.css" />
     <Content Include="Content\sb-admin-rtl.css" />
     <Content Include="Content\sb-admin.css" />
+    <Content Include="Content\skin-black.css" />
+    <Content Include="Content\skin-black.min.css" />
+    <Content Include="Content\skin-blue.css" />
+    <Content Include="Content\skin-blue.min.css" />
+    <Content Include="Content\skin-green.css" />
+    <Content Include="Content\skin-green.min.css" />
+    <Content Include="Content\skin-purple.css" />
+    <Content Include="Content\skin-purple.min.css" />
+    <Content Include="Content\skin-red.css" />
+    <Content Include="Content\skin-red.min.css" />
+    <Content Include="Content\skin-yellow.css" />
+    <Content Include="Content\skin-yellow.min.css" />
+    <Content Include="Content\_all-skins.css" />
+    <Content Include="Content\_all-skins.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bordered-pulled.less" />
@@ -222,6 +240,9 @@
     <Content Include="Content\_stacked.scss" />
     <Content Include="Content\_variables.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\dashboard.js" />
+    <Content Include="Scripts\dashboard2.js" />
+    <Content Include="Scripts\demo.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -289,6 +310,7 @@
     <Content Include="Views\Expedientes\Edit.cshtml" />
     <Content Include="Views\Expedientes\Index.cshtml" />
     <Content Include="Views\Pacientes\Sesion.cshtml" />
+    <Content Include="Views\Usuarios\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

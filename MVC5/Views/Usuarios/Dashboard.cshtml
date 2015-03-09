@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/sb-admin-rtl.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/Content/_all-skins.css" rel="stylesheet" />
+    <link href="~/Content/_all-skins.min.css" rel="stylesheet">
+</head>
+<body class="skin-blue">
+
+            <div class="content-wrapper">
+                <section class="content">
+                    <div class="row">
+                        <div class="col-lg-3 col-xs-12">
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h3>10</h3>
+                                    <p>Nuevas citas</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                @Html.ActionLink("Ir a citas", "Index", "Citas", new { @class = "small-box-footer" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h3>20</h3>
+                                    <p>Pacientes registrados</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                @Html.ActionLink("Ir a pacientes", "Index", "Pacientes", new { @class = "small-box-footer" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-xs-6">
+                            <div class="small-box bg-red">
+                                <div class="inner">
+                                    <h3>65</h3>
+                                    <p>Visitas a la página</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">Más información<i class="fa fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-xs-6">
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h3>65</h3>
+                                    <p>Expedientes registrados</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                @Html.ActionLink("Ir a expedientes", "Index", "Expedientes", new { @class = "small-box-footer" })
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+</body>
+</html>

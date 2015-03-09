@@ -43,7 +43,17 @@ namespace appProyectoFinal.Controllers
                 return RedirectToAction("Login");
             }
         }
-
+        public ActionResult Dashboard() 
+        {
+            if (session())
+            {
+                return View();
+            }
+            else 
+            {
+                return RedirectToAction("Login");
+            }
+        }
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -65,13 +75,12 @@ namespace appProyectoFinal.Controllers
                 Response.Cookies.Add(aCookie);
 
                 ViewData["Usuario"] = usuario.Nombre_Usuario;
-                return RedirectToAction("Index");
+                return RedirectToAction("Dashboard");
             }
             else
             {
                 ModelState.AddModelError("", "Usuario Incorrecto");
             }
-
             return RedirectToAction("Index");
         }
         public ActionResult Logout() {
